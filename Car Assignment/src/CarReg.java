@@ -1,5 +1,6 @@
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Scanner;
 
 public class CarReg {
@@ -27,13 +28,13 @@ public class CarReg {
 				System.out.println("You have selected to Search a Car");
 				System.out.print("Insert License Number: ");
 				String lcNum = input.nextLine();
-                searchCar(lcNum);
+                searchCar(lcNum.trim());
 				
 			}else if(option.trim().equalsIgnoreCase("d")) {
 				System.out.println("You have selected to Delete a Car");
 				System.out.print("Insert License Number: ");
 				String lcNum = input.nextLine();
-                deleteCar(lcNum);
+                deleteCar(lcNum.trim());
 			}else{
                 System.out.print("\nYou have selected '" + option + "' which is not a valid choice, Please try again");
                 break;
@@ -75,42 +76,42 @@ public class CarReg {
 				"license number: "+lcNum+"\nEngine Capacity: "+engineCapacity+ "\nMake: "+make+ "\nModel: " +model+ "\nYear: "+year);
 		
 		carMap.put(car.getLcNum(),car);
+		System.out.print("Map Size: "+carMap.size()+"\n");
 	}
 	
 	public static void searchCar(String lcNum) {
-		
-		for (Map.Entry<String, Car> obj : carMap.entrySet()) {
-			
-			String key = obj.getKey();
-			Car value = obj.getValue();
-			
-			if(key.equalsIgnoreCase(lcNum.trim())) {
-				System.out.println("License Num: "+value.getLcNum());
-				System.out.println("Engine Capacity "+value.getEngineCapacity());
-				System.out.println("Car Maker: "+value.getMake());
-				System.out.println("Car Model: "+value.getModel());
-				System.out.println("Car Year: "+value.getYear());
-			}
-				else {
-				System.out.println("Licence Number did not match ");
+			try {
+			if(lcNum.equalsIgnoreCase(carMap.get(lcNum).getLcNum()))
+			{
+				System.out.println("License Num: "+carMap.get(lcNum).getLcNum());
+				System.out.println("Engine Capacity "+carMap.get(lcNum).getEngineCapacity());
+				System.out.println("Car Maker: "+carMap.get(lcNum).getMake());
+				System.out.println("Car Model: "+carMap.get(lcNum).getModel());
+				System.out.println("Car Year: "+carMap.get(lcNum).getYear());
+				}else{
+				System.out.println("Licence Number did not match");
 				}
+			}catch(Exception e) {
+				System.out.println("Licence Number did not match");
 			}
-		}
-		
+			}
+			
 	public static void deleteCar(String lcNum) {
 		
-		for (Map.Entry<String, Car> obj : carMap.entrySet()) {
-			String key = obj.getKey();
-			Car value = obj.getValue();
-			
-			if(key.equalsIgnoreCase(lcNum.trim())) {
-				
-				carMap.remove(key, value);
-				System.out.print("Map Size: "+carMap.size()+"\n");				
+		try {
+		if(lcNum.equalsIgnoreCase(carMap.get(lcNum).getLcNum()))
+		{
+			System.out.println("You have successfully deleted the car with license No: "+carMap.remove(lcNum).getLcNum());
+			System.out.print("Map Size: "+carMap.size()+"\n");
+			}else{
+			System.out.println("Licence Number did not match");
+			System.out.print("Map Size: "+carMap.size()+"\n");
 			}
-				else {
-				System.out.println("License Number did not match ");
-				}
+		}
+		catch(Exception e) {
+				System.out.println("Car did not found with this license number");
+				System.out.print("Map Size: "+carMap.size()+"\n");
 			}
+								
 	}
 }
