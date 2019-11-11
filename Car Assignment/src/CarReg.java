@@ -1,13 +1,9 @@
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Scanner;
-import java.util.regex.Pattern;
-
 public class CarReg {
 	
-	static Car car = new Car();
-	private static Map<String,Car> carMap = new HashMap<>();
+	private static Map<Integer,Car> carMap = new HashMap<>();
 	
 	public static void main(String args[]) {
 		
@@ -28,13 +24,13 @@ public class CarReg {
 				
 				System.out.println("You have selected to Search a Car");
 				System.out.print("Insert License Number: ");
-				String lcNum = input.nextLine();
-                searchCar(lcNum.trim());
+				int lcNum = input.nextInt();
+                searchCar(lcNum);
 				
 			}else if(option.trim().equalsIgnoreCase("d")) {
 				System.out.println("You have selected to Delete a Car");
 				System.out.print("Insert License Number: ");
-				String lcNum = input.nextLine();
+				int lcNum = input.nextInt();
 				
                 deleteCar(lcNum);
   
@@ -49,53 +45,54 @@ public class CarReg {
 	
 	public static void addCar() {
 			
-		String lcNum,engineCapacity, make,model;
-		int year;
+		String make="",model="";
+		int lcNum,engineCapacity,year;
 		Car car = new Car();
 		
 		Scanner input = new Scanner(System.in);
 		
 		System.out.print("Insert License Num: ");
-		lcNum = input.nextLine();
-		car.setLcNum(lcNum);
-		
-		System.out.print("Insert Engine Capacity: ");
-		engineCapacity = input.nextLine();
-		car.setEngineCapacity(engineCapacity);
-		
-		System.out.print("Insert Car Make: ");
-		make = input.nextLine();
-		car.setMake(make);
-		
-		System.out.print("Insert Car Model: ");
-		model = input.nextLine();
-		car.setModel(model);
-		
-		System.out.print("Insert Car Year: ");
-		year = input.nextInt();
-		if (year >= 1900 && year <= 2019) {
-		car.setYear(year);
-		
-		System.out.println("===Your car has been added successfully with following information\r\n" + 
-				"license number: "+lcNum+"\nEngine Capacity: "+engineCapacity+ "\nMake: "+make+ "\nModel: " +model+ "\nYear: "+year);
+		lcNum = input.nextInt();
 		
 		if(carMap.containsKey(lcNum)) {
-			System.out.println("Car found with this license number.. You can't add another with this license number!");
-		}else {
 			
-		carMap.put(car.getLcNum(),car);
-		System.out.print("Map Size: "+carMap.size()+"\n");
+			System.out.println("Car found with this license number.. You can't add another with this license number!");
+		
+		} else {
+			
+			System.out.print("Insert Engine Capacity: ");
+			engineCapacity = input.nextInt();
+			
+			System.out.print("Insert Car Make: ");
+			make = input.next();
+			
+			System.out.print("Insert Car Model: ");
+			model = input.next();
+			
+			System.out.print("Insert Car Year: ");
+			year = input.nextInt();
+			
+			if (year >= 1900 && year <= 2019) {
+				car.setLcNum(lcNum);
+				car.setEngineCapacity(engineCapacity);
+				car.setMake(make);
+				car.setModel(model);
+				car.setYear(year);
+				
+				carMap.put(car.getLcNum(),car);
+				
+				System.out.println("===Your car has been added successfully with following information\r\n" + 
+						"license number: "+lcNum+"\nEngine Capacity: "+engineCapacity+ "\nMake: "+make+ "\nModel: " +model+ "\nYear: "+year);
+				
+				
+				}else {
+					System.out.println("Car registration failed..!"+"\nInput year between 1900 to 2019");
+				}
+			}
 		}
 		
-		}else {
-			System.out.println("Car registration failed..!"+"\nInput year  between 1900 to 2019");
-		}
-		
-		
-		
-	}
 	
-	public static void searchCar(String lcNum) {
+	public static void searchCar(int lcNum) {
 
 		Car getLN = carMap.get(lcNum);
 		if(getLN != null) {
@@ -109,7 +106,7 @@ public class CarReg {
 				}
 			}
 			
-	public static void deleteCar(String lcNum) {
+	public static void deleteCar(int lcNum) {
 
 		Car getLN = carMap.get(lcNum);
 		if(getLN != null){

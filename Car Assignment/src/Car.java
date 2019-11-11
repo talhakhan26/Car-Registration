@@ -1,26 +1,25 @@
 public class Car {
 
-	private String lcNum;
-	private String engineCapacity,make,model;
-	private int year;
+	private String make,model;
+	private int lcNum,engineCapacity,year;
 	
 	public Car() {
 		super();
 	}
 
-	public String getLcNum() {
+	public int getLcNum() {
 		return lcNum;
 	}
 
-	public void setLcNum(String lcNum) {
+	public void setLcNum(int lcNum) {
 		this.lcNum = lcNum;
 	}
 
-	public String getEngineCapacity() {
+	public int getEngineCapacity() {
 		return engineCapacity;
 	}
 
-	public void setEngineCapacity(String engineCapacity) {
+	public void setEngineCapacity(int engineCapacity) {
 		this.engineCapacity = engineCapacity;
 	}
 
@@ -47,5 +46,4 @@ public class Car {
 	public void setYear(int year) {
 		this.year = year;
 	}
-	
-}
+	}
